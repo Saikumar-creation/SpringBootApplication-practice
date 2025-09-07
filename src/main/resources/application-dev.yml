@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: springbootapplication
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/testing_schema
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  security:
+    user:
+      name: saidev
+      password: Saidev@123
+      roles: ADMIN,USER
+
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+
+server:
+  port: 9090
+  servlet:
+    context-path: /sba
+
+logging:
+  level:
+    org.springdoc: DEBUG
+    org.springframework.web: DEBUG
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

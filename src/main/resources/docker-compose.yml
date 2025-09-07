@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: testing_schema
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - springboot-net
+
+  springbootapp:
+    image: springbootpractice/springbootapplication:local
+    container_name: springboot_app
+    depends_on:
+      - mysql
+    ports:
+      - "8080:9090"   # host:container (app runs on 9090 inside, exposed on 8080 outside)
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/testing_schema
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    networks:
+      - springboot-net
+
+volumes:
+  mysql_data:
+
+networks:
+  springboot-net:
+    driver: bridge
